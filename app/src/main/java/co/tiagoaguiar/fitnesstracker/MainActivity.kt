@@ -18,6 +18,5 @@ class MainActivity : AppCompatActivity() {
             val navigateImc = Intent(this, ImcActivity::class.java)
             startActivity(navigateImc)
         }
-
     }
 }
