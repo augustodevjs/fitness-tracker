@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import co.tiagoaguiar.fitnesstracker.model.Calc
 
 class ImcActivity : AppCompatActivity() {
     private lateinit var editWeight: EditText
@@ -21,6 +22,7 @@ class ImcActivity : AppCompatActivity() {
         editWeight = findViewById(R.id.edit_imc_weight)
         editHeight = findViewById(R.id.edit_imc_height)
         val btnSend: Button = findViewById(R.id.btn_imc_send)
+
 
         btnSend.setOnClickListener {
             if (!validate()) {
@@ -38,8 +40,20 @@ class ImcActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(imcResponseId)
-                .setPositiveButton(android.R.string.ok
+                .setPositiveButton(
+                    android.R.string.ok
                 ) { dialog, which -> }
+                .setNegativeButton(R.string.save) { dialog, which ->
+                    Thread {
+                        val app = application as App
+                        val dao = app.db.calcDao()
+                        dao.insert(Calc(type = "imc", res = result))
+
+                        runOnUiThread {
+                            Toast.makeText(this@ImcActivity, R.string.saved, Toast.LENGTH_LONG).show()
+                        }
+                    }.start()
+                }
                 .create()
                 .show()
 

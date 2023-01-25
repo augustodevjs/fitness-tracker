@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             ),
         )
 
-        val adapter = MainAdapter(mainItems) { id ->
+            val adapter = MainAdapter(mainItems) { id ->
             when (id) {
                 1 -> {
                     val intent = Intent(this@MainActivity, ImcActivity::class.java)
@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
                     Log.i("teste", "função foi clicada ${id}")
                 }
             }
-
         }
+
         rvMain = findViewById(R.id.rv_main)
         rvMain.adapter = adapter
 
